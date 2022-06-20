@@ -4,11 +4,11 @@ var PlantModel = require("../models/plant");
 const limit = 20;
 
 exports.plants_find_paged = function (req, res, next) {
-  const plantId = req.query.plantId;
+  const inventoryId = req.query.inventoryId;
   const page = req.query.page || 0;
-  const options = plantId
+  const options = inventoryId
     ? {
-        plant: plantId,
+        inventory: inventoryId,
         /* tableNumber: { $nin: [null, ""] },
         voted: { $nin: [true] }, */
       }
