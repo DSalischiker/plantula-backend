@@ -25,20 +25,13 @@ exports.plants_find_paged = function (req, res, next) {
     });
 };
 
-/* exports.plant_statistics = async function (req, res, next) {
-  if (!req.query.referrerId) return next(createError(400));
-  try {
-    const totals = await VoterModel.countDocuments({
-      referrer: req.query.referrerId,
-      tableNumber: { $nin: [null, ""] },
-    });
-    const totalsVoted = await VoterModel.countDocuments({
-      referrer: req.query.referrerId,
-      voted: true,
-      tableNumber: { $nin: [null, ""] },
-    });
-    return res.json({ totals, totalsVoted, referrerId: req.query.referrerId });
-  } catch (err) {
-    return next(createError(500));
-  }
-}; */
+exports.findOne = function (req, res, next) {
+  console.log(req.params.id);
+  // return res.json({});
+  PlantModel.find({ _/* id:*/ }, "name").exec(function (err, list) {
+    if (err) {
+      return next(err);
+    }
+    return res.json({ plants: list });
+  });
+}

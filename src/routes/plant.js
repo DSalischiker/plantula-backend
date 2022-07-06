@@ -5,7 +5,7 @@ const plantsController = require("../controllers/plantsController");
 const router = express.Router();
 
 router.get(
-  "/",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
   plantsController.plants_find_paged
 );
