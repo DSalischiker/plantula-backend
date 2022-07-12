@@ -1,12 +1,15 @@
 var InventoryModel = require("../models/inventory");
+var plantModel = require("../models/plant");
 
-exports.findOne = function (req, res, next) {
-  console.log(req.params.id);
+exports.findUserInventory = function (req, res, next) {
+  console.log(req.user._id);
   // return res.json({});
-  InventoryModel.find({ _/* id:*/ }, "name").exec(function (err, list) {
+  InventoryModel.findOne({ user: req.user._id })
+  .populate('plants')
+  .exec(function (err, inventory) {
     if (err) {
       return next(err);
     }
-    return res.json({ inventories: list });
+    return res.json({ data: inventory });
   });
 }

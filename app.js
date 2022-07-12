@@ -27,6 +27,7 @@ require("./src/auth");
 
 const routes = require("./src/routes");
 const inventoryRoutes = require("./src/routes/inventory");
+const plantRoutes = require("./src/routes/plant");
 /* const referrersRoutes = require("./src/routes/referrer");
 const referralsRoutes = require("./src/routes/referral");
 const dataRoutes = require("./src/routes/general"); */
@@ -41,6 +42,7 @@ app.use(cookieParser());
 
 app.use("/", routes);
 app.use("/inventory", inventoryRoutes);
+app.use("/plant", plantRoutes);
 /* app.use("/referrers", referrersRoutes);
 app.use("/referrals", referralsRoutes);
 app.use("/data", dataRoutes); */

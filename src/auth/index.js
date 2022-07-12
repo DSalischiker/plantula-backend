@@ -1,5 +1,6 @@
 require("dotenv").config();
 const passport = require("passport");
+const InventoryModel = require("../models/inventory");
 const localStrategy = require("passport-local").Strategy;
 const UserModel = require("../models/user");
 const JWTstrategy = require("passport-jwt").Strategy;
@@ -20,6 +21,7 @@ passport.use(
           email: user.email,
           id: user._id,
         };
+        const inventory = await InventoryModel.create({ user: user._id });
 
         return done(null, userDto);
       } catch (error) {
