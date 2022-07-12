@@ -35,6 +35,7 @@ const dataRoutes = require("./src/routes/general"); */
 const app = express();
 
 app.use(cors());
+app.options('*', cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -42,19 +42,19 @@ passport.use(
     async (username, password, done) => {
       try {
         const user = await UserModel.findOne({ email: username });
-
+        console.log("user", user);
         if (!user) {
           return done(null, false, { message: "User not found", code: 404 });
         }
 
         const validate = await user.isValidPassword(password);
-
         if (!validate) {
           return done(null, false, { message: "Wrong Password", code: 401 });
         }
 
         return done(null, user, { message: "Logged in Successfully" });
       } catch (error) {
+        console.log(error);
         return done(error);
       }
     }

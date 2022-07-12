@@ -34,6 +34,7 @@ router.post("/login", async (req, res, next) => {
         return res.json({ token, email: user.email });
       });
     } catch (error) {
+      console.log(error);
       return next(error);
     }
   })(req, res, next);
