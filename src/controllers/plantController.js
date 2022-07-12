@@ -35,6 +35,20 @@ exports.findOne = function (req, res, next) {
   });
 }
 
+exports.findPropagables = function(req, res, next) {
+  PlantModel.find({ propagable: true })
+    .populate('user', "email")
+    .exec(function (err, plants) {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      return res.json({ data: plants });
+    }
+    )
+  ;
+}
+
 exports.create = async function (req, res, next) {
   try{
     const inventory = await InventoryModel.findOne({ user: req.user._id });
@@ -62,7 +76,7 @@ exports.create = async function (req, res, next) {
   }
 }
 
-exports.update = async function (req, res, next) {
+exports.updateOne = async function (req, res, next) {
   try{
     console.log(req.params.id, req.body);
     const plant = await PlantModel.updateOne({ _id: req.params.id }, {
@@ -76,6 +90,23 @@ exports.update = async function (req, res, next) {
       description: req.body.description,
     });
     return res.json({ data: plant });
+  } catch(err) {
+    console.log(err);
+    return next(err);
+  }
+}
+
+exports.deleteOne = async function (req, res, next) {
+  try {
+    const inventory = await InventoryModel.findOne({ user: req.user._id });
+
+    await PlantModel.deleteOne({ _id: req.params.id });
+
+    await InventoryModel.updateOne({
+      id: inventory._id
+    }, {"$pull": { plants: req.params.id }});
+
+    return res.json();
   } catch(err) {
     console.log(err);
     return next(err);
