@@ -4,26 +4,6 @@ var InventoryModel = require("../models/inventory");
 
 const limit = 20;
 
-/* exports.plants_find_paged = function (req, res, next) {
-  const inventoryId = req.query.inventoryId;
-  const page = req.query.page || 0;
-  const options = inventoryId
-    ? {
-        inventory: inventoryId,
-      }
-    : {};
-  PlantModel.paginate(options, {
-    offset: page * limit,
-    limit,
-  })
-    .then((result) => {
-      return res.json(result);
-    })
-    .catch((error) => {
-      return next(error);
-    });
-}; */
-
 exports.findOne = function (req, res, next) {
   console.log(req.params.id);
   // return res.json({});
@@ -66,7 +46,7 @@ exports.create = async function (req, res, next) {
     });
 
     await InventoryModel.updateOne({
-      id: inventory._id
+      _id: inventory._id
     }, {"$push": { plants: plant._id }});
 
     return res.json({ data: plant });
